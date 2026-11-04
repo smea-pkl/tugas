@@ -9,11 +9,11 @@ import (
 func TestUserInput(t *testing.T) {
 	t.Run("User input sutarman", func(t *testing.T) {
 		usr := User{
-			name:     "Sutarman",
-			username: "Sutarman",
-			email:    "sutarman@gmail.com",
-			password: "sutarman",
-			gender:   "l",
+			Name:     "Sutarman",
+			Username: "Sutarman",
+			Email:    "sutarman@gmail.com",
+			Password: "sutarman",
+			Gender:   "l",
 		}
 
 		check, err := FilterUser(usr)
@@ -23,11 +23,11 @@ func TestUserInput(t *testing.T) {
 
 	t.Run("User input andika", func(t *testing.T) {
 		usr := User{
-			name:     "Andika",
-			username: "Andika",
-			email:    "andika@gmail.com",
-			password: "andika",
-			gender:   "l",
+			Name:     "Andika",
+			Username: "Andika",
+			Email:    "andika@gmail.com",
+			Password: "andika",
+			Gender:   "l",
 		}
 
 		check, err := FilterUser(usr)
@@ -37,11 +37,11 @@ func TestUserInput(t *testing.T) {
 
 	t.Run("User input fitri dan gender p", func(t *testing.T) {
 		usr := User{
-			name:     "Fitri",
-			username: "Fitri",
-			email:    "fitri@gmail.com",
-			password: "fitri",
-			gender:   "p",
+			Name:     "Fitri",
+			Username: "Fitri",
+			Email:    "fitri@gmail.com",
+			Password: "fitri",
+			Gender:   "p",
 		}
 
 		check, err := FilterUser(usr)
@@ -51,11 +51,11 @@ func TestUserInput(t *testing.T) {
 
 	t.Run("User input fitri dan gender l", func(t *testing.T) {
 		usr := User{
-			name:     "Fitri",
-			username: "Fitri",
-			email:    "fitri@gmail.com",
-			password: "fitri",
-			gender:   "l",
+			Name:     "Fitri",
+			Username: "Fitri",
+			Email:    "fitri@gmail.com",
+			Password: "fitri",
+			Gender:   "l",
 		}
 
 		check, err := FilterUser(usr)
@@ -65,11 +65,11 @@ func TestUserInput(t *testing.T) {
 
 	t.Run("User input gender selain p, P, l, L", func(t *testing.T) {
 		usr := User{
-			name:     "Rizki",
-			username: "rizki",
-			email:    "rizki@gmail.com",
-			password: "rizki",
-			gender:   "T",
+			Name:     "Rizki",
+			Username: "rizki",
+			Email:    "rizki@gmail.com",
+			Password: "rizki",
+			Gender:   "T",
 		}
 
 		check, err := FilterUser(usr)

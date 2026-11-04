@@ -2,6 +2,9 @@ package main
 
 import (
 	"fmt"
+
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
 
 func main() {
@@ -15,6 +18,18 @@ func main() {
 	// }
 
 	// fmt.Println("Halo", nama)
+
+	dbfilename := "pkl.db"
+	db, err := gorm.Open(sqlite.Open(dbfilename), &gorm.Config{})
+
+	if err != nil {
+		panic(err)
+	}
+
+	err = db.AutoMigrate(&User{})
+	if err != nil {
+		panic(err)
+	}
 
 	jawaban := "Y"
 
@@ -39,6 +54,13 @@ Parent:
 		if !check {
 			fmt.Println("Gagal memasukkan data!")
 		}
+
+		err = db.Save(&user).Error
+		if err != nil {
+			panic(err)
+		}
+
+		fmt.Println("Data berhasil disimpan")
 
 		fmt.Println("Lanjut (Y/n) : ")
 		_, err = fmt.Scan(&jawaban)
