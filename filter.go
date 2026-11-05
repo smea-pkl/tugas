@@ -1,20 +1,29 @@
 package main
 
 import (
+	"os"
 	"strings"
+
+	"gopkg.in/yaml.v3"
 )
 
-var blacklist []string = []string{
-	"sutarman",
-	"andika",
-	"fitri",
+type Blacklist struct {
+	Blacklists []string `yaml:"blacklist"`
 }
 
 func FilterUser(usr User) (bool, error) {
+	var daftar Blacklist
 	username := strings.ToLower(usr.Username)
 	gender := strings.ToLower(usr.Gender)
 
-	for _, v := range blacklist {
+	yamlConfig, err := os.ReadFile("config.yaml")
+	if err != nil {
+		return true, err
+	}
+
+	err = yaml.Unmarshal(yamlConfig, &daftar)
+
+	for _, v := range daftar.Blacklists {
 		if v == username {
 			if username == "fitri" && usr.Gender != "p" {
 				return true, nil

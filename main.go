@@ -2,9 +2,6 @@ package main
 
 import (
 	"fmt"
-
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
 )
 
 func main() {
@@ -19,54 +16,105 @@ func main() {
 
 	// fmt.Println("Halo", nama)
 
-	dbfilename := "pkl.db"
-	db, err := gorm.Open(sqlite.Open(dbfilename), &gorm.Config{})
+	// 	jawaban := "Y"
 
-	if err != nil {
-		panic(err)
-	}
+	// Parent:
+	// 	for jawaban == "Y" || jawaban == "y" {
 
-	err = db.AutoMigrate(&User{})
-	if err != nil {
-		panic(err)
-	}
+	// 		var user, err = NewUser()
+	// 		if err != nil {
+	// 			panic(err)
+	// 		}
 
-	jawaban := "Y"
+	// 		// Filter Data
+	// 		b, err := FilterUser(user)
+	// 		if err != nil {
+	// 			panic(err)
+	// 		}
+	// 		if b == false {
+	// 			fmt.Println("Kamu tidak boleh daftar")
+	// 			continue Parent
+	// 		}
+
+	// 		// Simpan Data
+	// 		check, err := AddData(&user)
+	// 		if err != nil {
+	// 			fmt.Println("Data gagal disimpan")
+	// 		}
+
+	// 		if !check {
+	// 			fmt.Println("Config yaml salah")
+	// 		} else {
+	// 			fmt.Println("Data berhasil disimpan")
+	// 		}
+
+	//		fmt.Println("Lanjut (Y/n) : ")
+	//		_, err = fmt.Scan(&jawaban)
+	//		if err != nil {
+	//			panic(err)
+	//		}
+	//	}
+	var jawaban string
 
 Parent:
-	for jawaban == "Y" || jawaban == "y" {
+	for {
+		fmt.Println("Pilihan :")
+		fmt.Print("1. Daftar\n2. Login\n3. GetProfile\n4. Quit\nJawaban : ")
+		fmt.Scan(&jawaban)
 
-		var user, err = NewUser()
-		if err != nil {
-			panic(err)
-		}
+		switch jawaban {
+		case "1":
+			var user, err = NewUser()
+			if err != nil {
+				panic(err)
+			}
 
-		b, err := FilterUser(user)
-		if err != nil {
-			panic(err)
-		}
-		if b == false {
-			fmt.Println("Kamu tidak boleh daftar")
-			continue Parent
-		}
+			// Filter Data
+			b, err := FilterUser(user)
+			if err != nil {
+				panic(err)
+			}
+			if b == false {
+				fmt.Println("Kamu tidak boleh daftar")
+				continue Parent
+			}
 
-		check := InsertData(user.UserToString() + "\n")
-		if !check {
-			fmt.Println("Gagal memasukkan data!")
-		}
+			// Simpan Data
+			check, err := AddData(&user)
+			if err != nil {
+				fmt.Println("Data gagal disimpan")
+				continue Parent
+			}
 
-		err = db.Save(&user).Error
-		if err != nil {
-			panic(err)
-		}
-
-		fmt.Println("Data berhasil disimpan")
-
-		fmt.Println("Lanjut (Y/n) : ")
-		_, err = fmt.Scan(&jawaban)
-		if err != nil {
-			panic(err)
+			if !check {
+				fmt.Println("Config yaml salah")
+				continue Parent
+			}
+			fmt.Println("Data berhasil disimpan")
+		case "2":
+			err := Login()
+			if !err {
+				fmt.Println("gagal login")
+				continue Parent
+			}
+			fmt.Println("berhasil login")
+		case "3":
+			var nama string
+			fmt.Print("Masukkan nama : ")
+			fmt.Scan(&nama)
+			user, err := Profile(nama)
+			if err != nil {
+				panic(err)
+			}
+			fmt.Println("Nama:", user.Name)
+			fmt.Println("Username:", user.Username)
+			fmt.Println("Email:", user.Email)
+		case "4":
+			fmt.Println("Keluar")
+			break Parent
+		default:
+			fmt.Println("Input salah")
+			break Parent
 		}
 	}
-
 }
