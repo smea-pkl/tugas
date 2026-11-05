@@ -2,6 +2,12 @@ module pkl
 
 go 1.27.2
 
+tool (
+	connectrpc.com/connect/cmd/protoc-gen-connect-go
+	github.com/google/wire/cmd/wire
+	google.golang.org/protobuf/cmd/proto-gen-go
+)
+
 require (
 	github.com/stretchr/testify v1.12.1
 	gopkg.in/yaml.v3 v3.0.1

@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package pkl.users.v1;
+
+option go_package = "pkl/backend/gen/pkl/users/v1;usersv1";
+
+message LoginRequest {}
+message LoginResponse {}
+
+service UserService {
+    rpc Login(LoginRequest) returns (LoginResponse);
+
+}

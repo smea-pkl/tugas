@@ -80,7 +80,7 @@ Parent:
 			}
 
 			// Simpan Data
-			check, err := AddData(&user)
+			check, err := InsertData(&user)
 			if err != nil {
 				fmt.Println("Data gagal disimpan")
 				continue Parent
