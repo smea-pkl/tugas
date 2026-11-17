@@ -7,6 +7,7 @@
 package usersv1
 
 import (
+	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -229,26 +230,129 @@ func (x *RegisterResponse) GetMsg() string {
 	return ""
 }
 
+type GetProfileRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetProfileRequest) Reset() {
+	*x = GetProfileRequest{}
+	mi := &file_pkl_users_v1_user_service_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetProfileRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetProfileRequest) ProtoMessage() {}
+
+func (x *GetProfileRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_pkl_users_v1_user_service_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetProfileRequest.ProtoReflect.Descriptor instead.
+func (*GetProfileRequest) Descriptor() ([]byte, []int) {
+	return file_pkl_users_v1_user_service_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *GetProfileRequest) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+type GetProfileResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
+	Email         string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetProfileResponse) Reset() {
+	*x = GetProfileResponse{}
+	mi := &file_pkl_users_v1_user_service_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetProfileResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetProfileResponse) ProtoMessage() {}
+
+func (x *GetProfileResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_pkl_users_v1_user_service_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetProfileResponse.ProtoReflect.Descriptor instead.
+func (*GetProfileResponse) Descriptor() ([]byte, []int) {
+	return file_pkl_users_v1_user_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *GetProfileResponse) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *GetProfileResponse) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
 var File_pkl_users_v1_user_service_proto protoreflect.FileDescriptor
 
 const file_pkl_users_v1_user_service_proto_rawDesc = "" +
 	"\n" +
-	"\x1fpkl/users/v1/user_service.proto\x12\fpkl.users.v1\"F\n" +
-	"\fLoginRequest\x12\x1a\n" +
-	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
-	"\bpassword\x18\x02 \x01(\tR\bpassword\"7\n" +
+	"\x1fpkl/users/v1/user_service.proto\x12\fpkl.users.v1\x1a\x1bbuf/validate/validate.proto\"\\\n" +
+	"\fLoginRequest\x12%\n" +
+	"\busername\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x03\x18\x14R\busername\x12%\n" +
+	"\bpassword\x18\x02 \x01(\tB\t\xbaH\x06r\x04\x10\b\x18dR\bpassword\"7\n" +
 	"\rLoginResponse\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12\x10\n" +
-	"\x03msg\x18\x02 \x01(\tR\x03msg\"_\n" +
-	"\x0fRegisterRequest\x12\x1a\n" +
-	"\busername\x18\x01 \x01(\tR\busername\x12\x14\n" +
-	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1a\n" +
-	"\bpassword\x18\x03 \x01(\tR\bpassword\"$\n" +
+	"\x03msg\x18\x02 \x01(\tR\x03msg\"~\n" +
+	"\x0fRegisterRequest\x12%\n" +
+	"\busername\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x03\x18\x14R\busername\x12\x1d\n" +
+	"\x05email\x18\x02 \x01(\tB\a\xbaH\x04r\x02`\x01R\x05email\x12%\n" +
+	"\bpassword\x18\x03 \x01(\tB\t\xbaH\x06r\x04\x10\b\x18dR\bpassword\"$\n" +
 	"\x10RegisterResponse\x12\x10\n" +
-	"\x03msg\x18\x01 \x01(\tR\x03msg2\x9a\x01\n" +
+	"\x03msg\x18\x01 \x01(\tR\x03msg\"/\n" +
+	"\x11GetProfileRequest\x12\x1a\n" +
+	"\busername\x18\x01 \x01(\tR\busername\"F\n" +
+	"\x12GetProfileResponse\x12\x1a\n" +
+	"\busername\x18\x01 \x01(\tR\busername\x12\x14\n" +
+	"\x05email\x18\x02 \x01(\tR\x05email2\xeb\x01\n" +
 	"\vUserService\x12@\n" +
 	"\x05Login\x12\x1a.pkl.users.v1.LoginRequest\x1a\x1b.pkl.users.v1.LoginResponse\x12I\n" +
-	"\bRegister\x12\x1d.pkl.users.v1.RegisterRequest\x1a\x1e.pkl.users.v1.RegisterResponseB&Z$pkl/backend/gen/pkl/users/v1;usersv1b\x06proto3"
+	"\bRegister\x12\x1d.pkl.users.v1.RegisterRequest\x1a\x1e.pkl.users.v1.RegisterResponse\x12O\n" +
+	"\n" +
+	"GetProfile\x12\x1f.pkl.users.v1.GetProfileRequest\x1a .pkl.users.v1.GetProfileResponseB&Z$pkl/backend/gen/pkl/users/v1;usersv1b\x06proto3"
 
 var (
 	file_pkl_users_v1_user_service_proto_rawDescOnce sync.Once
@@ -262,20 +366,24 @@ func file_pkl_users_v1_user_service_proto_rawDescGZIP() []byte {
 	return file_pkl_users_v1_user_service_proto_rawDescData
 }
 
-var file_pkl_users_v1_user_service_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_pkl_users_v1_user_service_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_pkl_users_v1_user_service_proto_goTypes = []any{
-	(*LoginRequest)(nil),     // 0: pkl.users.v1.LoginRequest
-	(*LoginResponse)(nil),    // 1: pkl.users.v1.LoginResponse
-	(*RegisterRequest)(nil),  // 2: pkl.users.v1.RegisterRequest
-	(*RegisterResponse)(nil), // 3: pkl.users.v1.RegisterResponse
+	(*LoginRequest)(nil),       // 0: pkl.users.v1.LoginRequest
+	(*LoginResponse)(nil),      // 1: pkl.users.v1.LoginResponse
+	(*RegisterRequest)(nil),    // 2: pkl.users.v1.RegisterRequest
+	(*RegisterResponse)(nil),   // 3: pkl.users.v1.RegisterResponse
+	(*GetProfileRequest)(nil),  // 4: pkl.users.v1.GetProfileRequest
+	(*GetProfileResponse)(nil), // 5: pkl.users.v1.GetProfileResponse
 }
 var file_pkl_users_v1_user_service_proto_depIdxs = []int32{
 	0, // 0: pkl.users.v1.UserService.Login:input_type -> pkl.users.v1.LoginRequest
 	2, // 1: pkl.users.v1.UserService.Register:input_type -> pkl.users.v1.RegisterRequest
-	1, // 2: pkl.users.v1.UserService.Login:output_type -> pkl.users.v1.LoginResponse
-	3, // 3: pkl.users.v1.UserService.Register:output_type -> pkl.users.v1.RegisterResponse
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
+	4, // 2: pkl.users.v1.UserService.GetProfile:input_type -> pkl.users.v1.GetProfileRequest
+	1, // 3: pkl.users.v1.UserService.Login:output_type -> pkl.users.v1.LoginResponse
+	3, // 4: pkl.users.v1.UserService.Register:output_type -> pkl.users.v1.RegisterResponse
+	5, // 5: pkl.users.v1.UserService.GetProfile:output_type -> pkl.users.v1.GetProfileResponse
+	3, // [3:6] is the sub-list for method output_type
+	0, // [0:3] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -292,7 +400,7 @@ func file_pkl_users_v1_user_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_pkl_users_v1_user_service_proto_rawDesc), len(file_pkl_users_v1_user_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

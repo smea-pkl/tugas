@@ -4,13 +4,14 @@
 
 import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
 import { fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv2";
+import { file_buf_validate_validate } from "../../../buf/validate/validate_pb";
 import type { Message } from "@bufbuild/protobuf";
 
 /**
  * Describes the file pkl/users/v1/user_service.proto.
  */
 export const file_pkl_users_v1_user_service: GenFile = /*@__PURE__*/
-  fileDesc("Ch9wa2wvdXNlcnMvdjEvdXNlcl9zZXJ2aWNlLnByb3RvEgxwa2wudXNlcnMudjEiMgoMTG9naW5SZXF1ZXN0EhAKCHVzZXJuYW1lGAEgASgJEhAKCHBhc3N3b3JkGAIgASgJIisKDUxvZ2luUmVzcG9uc2USDQoFdG9rZW4YASABKAkSCwoDbXNnGAIgASgJIkQKD1JlZ2lzdGVyUmVxdWVzdBIQCgh1c2VybmFtZRgBIAEoCRINCgVlbWFpbBgCIAEoCRIQCghwYXNzd29yZBgDIAEoCSIfChBSZWdpc3RlclJlc3BvbnNlEgsKA21zZxgBIAEoCTKaAQoLVXNlclNlcnZpY2USQAoFTG9naW4SGi5wa2wudXNlcnMudjEuTG9naW5SZXF1ZXN0GhsucGtsLnVzZXJzLnYxLkxvZ2luUmVzcG9uc2USSQoIUmVnaXN0ZXISHS5wa2wudXNlcnMudjEuUmVnaXN0ZXJSZXF1ZXN0Gh4ucGtsLnVzZXJzLnYxLlJlZ2lzdGVyUmVzcG9uc2VCJlokcGtsL2JhY2tlbmQvZ2VuL3BrbC91c2Vycy92MTt1c2Vyc3YxYgZwcm90bzM");
+  fileDesc("Ch9wa2wvdXNlcnMvdjEvdXNlcl9zZXJ2aWNlLnByb3RvEgxwa2wudXNlcnMudjEiSAoMTG9naW5SZXF1ZXN0EhsKCHVzZXJuYW1lGAEgASgJQgm6SAZyBBADGBQSGwoIcGFzc3dvcmQYAiABKAlCCbpIBnIEEAgYZCIrCg1Mb2dpblJlc3BvbnNlEg0KBXRva2VuGAEgASgJEgsKA21zZxgCIAEoCSJjCg9SZWdpc3RlclJlcXVlc3QSGwoIdXNlcm5hbWUYASABKAlCCbpIBnIEEAMYFBIWCgVlbWFpbBgCIAEoCUIHukgEcgJgARIbCghwYXNzd29yZBgDIAEoCUIJukgGcgQQCBhkIh8KEFJlZ2lzdGVyUmVzcG9uc2USCwoDbXNnGAEgASgJIiUKEUdldFByb2ZpbGVSZXF1ZXN0EhAKCHVzZXJuYW1lGAEgASgJIjUKEkdldFByb2ZpbGVSZXNwb25zZRIQCgh1c2VybmFtZRgBIAEoCRINCgVlbWFpbBgCIAEoCTLrAQoLVXNlclNlcnZpY2USQAoFTG9naW4SGi5wa2wudXNlcnMudjEuTG9naW5SZXF1ZXN0GhsucGtsLnVzZXJzLnYxLkxvZ2luUmVzcG9uc2USSQoIUmVnaXN0ZXISHS5wa2wudXNlcnMudjEuUmVnaXN0ZXJSZXF1ZXN0Gh4ucGtsLnVzZXJzLnYxLlJlZ2lzdGVyUmVzcG9uc2USTwoKR2V0UHJvZmlsZRIfLnBrbC51c2Vycy52MS5HZXRQcm9maWxlUmVxdWVzdBogLnBrbC51c2Vycy52MS5HZXRQcm9maWxlUmVzcG9uc2VCJlokcGtsL2JhY2tlbmQvZ2VuL3BrbC91c2Vycy92MTt1c2Vyc3YxYgZwcm90bzM", [file_buf_validate_validate]);
 
 /**
  * @generated from message pkl.users.v1.LoginRequest
@@ -101,6 +102,45 @@ export const RegisterResponseSchema: GenMessage<RegisterResponse> = /*@__PURE__*
   messageDesc(file_pkl_users_v1_user_service, 3);
 
 /**
+ * @generated from message pkl.users.v1.GetProfileRequest
+ */
+export type GetProfileRequest = Message<"pkl.users.v1.GetProfileRequest"> & {
+  /**
+   * @generated from field: string username = 1;
+   */
+  username: string;
+};
+
+/**
+ * Describes the message pkl.users.v1.GetProfileRequest.
+ * Use `create(GetProfileRequestSchema)` to create a new message.
+ */
+export const GetProfileRequestSchema: GenMessage<GetProfileRequest> = /*@__PURE__*/
+  messageDesc(file_pkl_users_v1_user_service, 4);
+
+/**
+ * @generated from message pkl.users.v1.GetProfileResponse
+ */
+export type GetProfileResponse = Message<"pkl.users.v1.GetProfileResponse"> & {
+  /**
+   * @generated from field: string username = 1;
+   */
+  username: string;
+
+  /**
+   * @generated from field: string email = 2;
+   */
+  email: string;
+};
+
+/**
+ * Describes the message pkl.users.v1.GetProfileResponse.
+ * Use `create(GetProfileResponseSchema)` to create a new message.
+ */
+export const GetProfileResponseSchema: GenMessage<GetProfileResponse> = /*@__PURE__*/
+  messageDesc(file_pkl_users_v1_user_service, 5);
+
+/**
  * @generated from service pkl.users.v1.UserService
  */
 export const UserService: GenService<{
@@ -119,6 +159,14 @@ export const UserService: GenService<{
     methodKind: "unary";
     input: typeof RegisterRequestSchema;
     output: typeof RegisterResponseSchema;
+  },
+  /**
+   * @generated from rpc pkl.users.v1.UserService.GetProfile
+   */
+  getProfile: {
+    methodKind: "unary";
+    input: typeof GetProfileRequestSchema;
+    output: typeof GetProfileResponseSchema;
   },
 }> = /*@__PURE__*/
   serviceDesc(file_pkl_users_v1_user_service, 0);
