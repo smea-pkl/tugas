@@ -1,18 +1,10 @@
-import { Card, Center } from "@chakra-ui/react";
+import { Center } from "@chakra-ui/react";
+import { UserProfileCard } from "@/features/authentication";
 
 function Profile() {
   return (
-    <Center>
-      <Card.Root>
-        <Card.Body>
-          <Card.Title>Profile</Card.Title>
-          <Card.Description>Username : </Card.Description>
-          <Card.Description>Email : </Card.Description>
-        </Card.Body>
-        <Card.Footer>
-          <a href="/home">Back</a>
-        </Card.Footer>
-      </Card.Root>
+    <Center minH="100vh">
+      <UserProfileCard />
     </Center>
   );
 }

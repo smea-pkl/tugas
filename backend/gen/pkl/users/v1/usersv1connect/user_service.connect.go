@@ -37,15 +37,15 @@ const (
 	UserServiceLoginProcedure = "/pkl.users.v1.UserService/Login"
 	// UserServiceRegisterProcedure is the fully-qualified name of the UserService's Register RPC.
 	UserServiceRegisterProcedure = "/pkl.users.v1.UserService/Register"
-	// UserServiceGetProfileProcedure is the fully-qualified name of the UserService's GetProfile RPC.
-	UserServiceGetProfileProcedure = "/pkl.users.v1.UserService/GetProfile"
+	// UserServiceGetUserProcedure is the fully-qualified name of the UserService's GetUser RPC.
+	UserServiceGetUserProcedure = "/pkl.users.v1.UserService/GetUser"
 )
 
 // UserServiceClient is a client for the pkl.users.v1.UserService service.
 type UserServiceClient interface {
 	Login(context.Context, *connect.Request[v1.LoginRequest]) (*connect.Response[v1.LoginResponse], error)
 	Register(context.Context, *connect.Request[v1.RegisterRequest]) (*connect.Response[v1.RegisterResponse], error)
-	GetProfile(context.Context, *connect.Request[v1.GetProfileRequest]) (*connect.Response[v1.GetProfileResponse], error)
+	GetUser(context.Context, *connect.Request[v1.GetUserRequest]) (*connect.Response[v1.GetUserResponse], error)
 }
 
 // NewUserServiceClient constructs a client for the pkl.users.v1.UserService service. By default, it
@@ -71,10 +71,10 @@ func NewUserServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithSchema(userServiceMethods.ByName("Register")),
 			connect.WithClientOptions(opts...),
 		),
-		getProfile: connect.NewClient[v1.GetProfileRequest, v1.GetProfileResponse](
+		getUser: connect.NewClient[v1.GetUserRequest, v1.GetUserResponse](
 			httpClient,
-			baseURL+UserServiceGetProfileProcedure,
-			connect.WithSchema(userServiceMethods.ByName("GetProfile")),
+			baseURL+UserServiceGetUserProcedure,
+			connect.WithSchema(userServiceMethods.ByName("GetUser")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -82,9 +82,9 @@ func NewUserServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 
 // userServiceClient implements UserServiceClient.
 type userServiceClient struct {
-	login      *connect.Client[v1.LoginRequest, v1.LoginResponse]
-	register   *connect.Client[v1.RegisterRequest, v1.RegisterResponse]
-	getProfile *connect.Client[v1.GetProfileRequest, v1.GetProfileResponse]
+	login    *connect.Client[v1.LoginRequest, v1.LoginResponse]
+	register *connect.Client[v1.RegisterRequest, v1.RegisterResponse]
+	getUser  *connect.Client[v1.GetUserRequest, v1.GetUserResponse]
 }
 
 // Login calls pkl.users.v1.UserService.Login.
@@ -97,16 +97,16 @@ func (c *userServiceClient) Register(ctx context.Context, req *connect.Request[v
 	return c.register.CallUnary(ctx, req)
 }
 
-// GetProfile calls pkl.users.v1.UserService.GetProfile.
-func (c *userServiceClient) GetProfile(ctx context.Context, req *connect.Request[v1.GetProfileRequest]) (*connect.Response[v1.GetProfileResponse], error) {
-	return c.getProfile.CallUnary(ctx, req)
+// GetUser calls pkl.users.v1.UserService.GetUser.
+func (c *userServiceClient) GetUser(ctx context.Context, req *connect.Request[v1.GetUserRequest]) (*connect.Response[v1.GetUserResponse], error) {
+	return c.getUser.CallUnary(ctx, req)
 }
 
 // UserServiceHandler is an implementation of the pkl.users.v1.UserService service.
 type UserServiceHandler interface {
 	Login(context.Context, *connect.Request[v1.LoginRequest]) (*connect.Response[v1.LoginResponse], error)
 	Register(context.Context, *connect.Request[v1.RegisterRequest]) (*connect.Response[v1.RegisterResponse], error)
-	GetProfile(context.Context, *connect.Request[v1.GetProfileRequest]) (*connect.Response[v1.GetProfileResponse], error)
+	GetUser(context.Context, *connect.Request[v1.GetUserRequest]) (*connect.Response[v1.GetUserResponse], error)
 }
 
 // NewUserServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -128,10 +128,10 @@ func NewUserServiceHandler(svc UserServiceHandler, opts ...connect.HandlerOption
 		connect.WithSchema(userServiceMethods.ByName("Register")),
 		connect.WithHandlerOptions(opts...),
 	)
-	userServiceGetProfileHandler := connect.NewUnaryHandler(
-		UserServiceGetProfileProcedure,
-		svc.GetProfile,
-		connect.WithSchema(userServiceMethods.ByName("GetProfile")),
+	userServiceGetUserHandler := connect.NewUnaryHandler(
+		UserServiceGetUserProcedure,
+		svc.GetUser,
+		connect.WithSchema(userServiceMethods.ByName("GetUser")),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/pkl.users.v1.UserService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -140,8 +140,8 @@ func NewUserServiceHandler(svc UserServiceHandler, opts ...connect.HandlerOption
 			userServiceLoginHandler.ServeHTTP(w, r)
 		case UserServiceRegisterProcedure:
 			userServiceRegisterHandler.ServeHTTP(w, r)
-		case UserServiceGetProfileProcedure:
-			userServiceGetProfileHandler.ServeHTTP(w, r)
+		case UserServiceGetUserProcedure:
+			userServiceGetUserHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -159,6 +159,6 @@ func (UnimplementedUserServiceHandler) Register(context.Context, *connect.Reques
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("pkl.users.v1.UserService.Register is not implemented"))
 }
 
-func (UnimplementedUserServiceHandler) GetProfile(context.Context, *connect.Request[v1.GetProfileRequest]) (*connect.Response[v1.GetProfileResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("pkl.users.v1.UserService.GetProfile is not implemented"))
+func (UnimplementedUserServiceHandler) GetUser(context.Context, *connect.Request[v1.GetUserRequest]) (*connect.Response[v1.GetUserResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("pkl.users.v1.UserService.GetUser is not implemented"))
 }

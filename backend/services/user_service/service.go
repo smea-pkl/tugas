@@ -8,6 +8,7 @@ import (
 	"fmt"
 	usersv1 "pkl/backend/gen/pkl/users/v1"
 	"pkl/backend/models"
+	"pkl/backend/pkgs/san_config"
 	"strings"
 
 	"connectrpc.com/connect"
@@ -20,37 +21,8 @@ type userServiceImpl struct {
 	jwtKey []byte
 }
 
-var secretKey = []byte("rahasia")
-
-type CustomClaims struct {
-	Username string
-	jwt.RegisteredClaims
-}
-
-func (c *CustomClaims) Generate() (string, error) {
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, CustomClaims{
-		Username: c.Username,
-	})
-
-	return token.SignedString(secretKey)
-}
-
-func (c *CustomClaims) Verify(token string) error {
-	tkn, err := jwt.ParseWithClaims(token, &CustomClaims{}, func(t *jwt.Token) (any, error) { return secretKey, nil }, jwt.WithValidMethods([]string{jwt.SigningMethodHS256.Alg()}))
-	if err != nil {
-		return err
-	}
-
-	if claims, ok := tkn.Claims.(*CustomClaims); ok && tkn.Valid {
-		c.Username = claims.Username
-		return nil
-	}
-
-	return fmt.Errorf("Invalid token")
-}
-
-// GetProfile implements [usersv1connect.UserServiceHandler].
-func (u *userServiceImpl) GetProfile(ctx context.Context, req *connect.Request[usersv1.GetProfileRequest]) (*connect.Response[usersv1.GetProfileResponse], error) {
+// GetUser implements [usersv1connect.UserServiceHandler].
+func (u *userServiceImpl) GetUser(ctx context.Context, req *connect.Request[usersv1.GetUserRequest]) (*connect.Response[usersv1.GetUserResponse], error) {
 	pay := req.Header().Get("Authorization")
 
 	if strings.TrimSpace(pay) == "" {
@@ -70,10 +42,47 @@ func (u *userServiceImpl) GetProfile(ctx context.Context, req *connect.Request[u
 		return nil, err
 	}
 
-	return connect.NewResponse(&usersv1.GetProfileResponse{
+	return connect.NewResponse(&usersv1.GetUserResponse{
 		Username: user.Username,
 		Email:    user.Email,
 	}), nil
+}
+
+type CustomClaims struct {
+	Username string
+	jwt.RegisteredClaims
+}
+
+func (c *CustomClaims) Generate() (string, error) {
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, CustomClaims{
+		Username: c.Username,
+	})
+
+	cfg, err := san_config.RenderYamlConfig()
+	if err != nil {
+		return "", err
+	}
+
+	return token.SignedString([]byte(cfg.JwtKey))
+}
+
+func (c *CustomClaims) Verify(token string) error {
+	cfg, err := san_config.RenderYamlConfig()
+	if err != nil {
+		return err
+	}
+
+	tkn, err := jwt.ParseWithClaims(token, &CustomClaims{}, func(t *jwt.Token) (any, error) { return []byte(cfg.JwtKey), nil }, jwt.WithValidMethods([]string{jwt.SigningMethodHS256.Alg()}))
+	if err != nil {
+		return err
+	}
+
+	if claims, ok := tkn.Claims.(*CustomClaims); ok && tkn.Valid {
+		c.Username = claims.Username
+		return nil
+	}
+
+	return fmt.Errorf("Invalid token")
 }
 
 // Register implements [usersv1connect.UserServiceHandler].

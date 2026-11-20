@@ -39,11 +39,11 @@ message RegisterResponse {
     string msg = 1;
 }
 
-message GetProfileRequest {
+message GetUserRequest {
     string username = 1;
 }
 
-message GetProfileResponse {
+message GetUserResponse {
     string username = 1;
     string email = 2;
 }
@@ -51,5 +51,5 @@ message GetProfileResponse {
 service UserService {
     rpc Login(LoginRequest) returns (LoginResponse);
     rpc Register(RegisterRequest) returns (RegisterResponse);
-    rpc GetProfile(GetProfileRequest) returns (GetProfileResponse);
+    rpc GetUser(GetUserRequest) returns (GetUserResponse);
 }
