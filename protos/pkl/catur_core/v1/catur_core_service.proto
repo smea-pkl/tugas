@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+package pkl.catur_core.v1;
+
+option go_package = "pkl/backend/gen/pkl/catur_core/v1;catur_corev1";
+
+enum ChessColor {
+    CHESS_COLOR_UNSPECIFIED = 0;
+    CHESS_COLOR_WHITE = 1;
+    CHESS_COLOR_BLACK = 2;
+}
+
+message ClientMessage {
+    oneof payload {
+        JoinGame join_game = 1;
+        MakeMove make_move = 2;
+        Resign resign = 3;
+    }
+}
+
+message JoinGame {
+    string game_id = 1;
+}
+
+message MakeMove {
+    string uci = 1;
+}
+
+message Resign {}
+
+message ServerMessage {
+    oneof payload {
+        JoinedGame joined_game = 1;
+        MoveMade move_made = 2;
+        MoveRejected move_rejected = 3;
+        GameOver game_over = 4;
+        JoinGameRejected join_game_rejected = 5;
+    }
+}
+
+message JoinedGame {
+    ChessColor color = 1;
+    string opponent_id = 2;
+    string fen = 3;
+}
+
+message MoveMade {
+    string fen = 1;
+    string last_move = 2;
+}
+
+message MoveRejected {
+    enum Reason {
+        REASON_UNSPECIFIED = 0;
+        REASON_INVALID_MOVE = 1;
+        REASON_WRONG_UCI_FORMAT = 2;
+        REASON_NOT_YOUR_TURN = 3;
+        REASON_GAME_COMPLETED = 4;
+    }
+    Reason reason = 1;
+    string fen = 2;
+}
+
+message GameOver {
+    enum Result {
+        RESULT_UNSPECIFIED = 0;
+        RESULT_WHITE_WIN = 1;
+        RESULT_BLACK_WIN = 2;
+        RESULT_DRAW = 3;
+    }
+    Result result = 1;
+
+    enum Reason {
+        REASON_UNSPECIFIED = 0;
+        REASON_CHECKMATE = 1;
+        REASON_STALEMATE = 2;
+        REASON_RESIGN = 3;
+        REASON_DRAWOFFER = 4;
+        REASON_THREEFOLD_REPETITION = 5;
+        REASON_FIVEFOLD_REPETITION = 6;
+        REASON_FIFTY_MOVE_RULE = 7;
+        REASON_SEVENTY_FIVE_MOVE_RULE = 8;
+        REASON_INSUFFICIENT_MATERIAL = 9;
+    }
+    Reason reason = 2;
+}
+
+message JoinGameRejected {}

@@ -23,7 +23,7 @@ func main() {
 	}
 
 	mux := http.NewServeMux()
-	user_service.UserServiceRegister(mux, db, &cfg)
+	user_service.UserServiceRegister(mux, db)
 
 	slog.Info("running server", "Listen", cfg.ListenAddress)
 

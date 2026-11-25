@@ -18,7 +18,6 @@ import (
 
 type userServiceImpl struct {
 	db     *gorm.DB
-	jwtKey []byte
 }
 
 // GetUser implements [usersv1connect.UserServiceHandler].
